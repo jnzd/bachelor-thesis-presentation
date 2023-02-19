@@ -11,28 +11,7 @@
 
 % \setbeamersize{text margin left=30,text margin right=30mm} 
 
-\makeatletter
-\setbeamertemplate{frametitle}{
-    \ifbeamercolorempty[bg]{frametitle}{}{\nointerlineskip}%
-    \@tempdima=\textwidth%
-    \advance\@tempdima by\beamer@leftmargin%
-    \advance\@tempdima by\beamer@rightmargin%
-    \begin{beamercolorbox}[sep=0.3cm,center,wd=\the\@tempdima]{frametitle}
-        \usebeamerfont{frametitle}%
-        \vbox{}\vskip-1ex%
-        \if@tempswa\else\csname beamer@ftecenter\endcsname\fi%
-        \strut\insertframetitle\strut\par%
-        {%
-            \ifx\insertframesubtitle\@empty%
-            \else%
-            {\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle\strut\par}%
-            \fi
-        }%
-        \vskip-1ex%
-        \if@tempswa\else\vskip-.3cm\fi% set inside beamercolorbox... evil here...
-    \end{beamercolorbox}%
-}
-\makeatother
+\input{layout/frametitle.tex}
 
 
 \begin{document}
