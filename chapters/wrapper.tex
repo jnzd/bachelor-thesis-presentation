@@ -1,0 +1,47 @@
+\section{The Wrapper}
+
+\begin{frame}
+    \frametitle{The Wrapper}
+    \centering
+    \includegraphics[width=0.9\linewidth]{diagrams/wrapper.png}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Signature to Database Schema 1}
+
+\begin{figure}[H]
+    \label{fig:example-signature}
+\begin{verbatim}
+loc_accessed(user_id: int, purpose: string)
+perm_granted(user_id: int)
+perm_revoked(user_id: int)
+\end{verbatim}
+    \caption{Sample MonPoly Signature}
+\end{figure}
+    
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Signature to Database Schema 2}
+\begin{figure}[H]
+    \label{fig:example-policy-schema}
+\begin{verbatim}
+CREATE TABLE perm_revoked(x1 INT,
+                          time_stamp TIMESTAMP,
+                          time_point INT) 
+                          timestamp(time_stamp);
+CREATE TABLE perm_granted(x1 INT,
+                          time_stamp TIMESTAMP,
+                          time_point INT) 
+                          timestamp(time_stamp);
+CREATE TABLE loc_accessed(x1 INT, x2 STRING,
+                          time_stamp TIMESTAMP,
+                          time_point INT) 
+                          timestamp(time_stamp);
+CREATE TABLE ts( time_stamp TIMESTAMP,
+                 time_point INT) 
+                 timestamp(time_stamp);
+\end{verbatim}
+    \caption{SQL Schema for Sample Policy}
+\end{figure}
+\end{frame}

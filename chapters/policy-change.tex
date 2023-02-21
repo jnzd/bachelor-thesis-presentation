@@ -1,0 +1,98 @@
+\section{Algorithm and Policy Change}
+
+\begin{frame}
+    \frametitle{Policy Change}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Relative Intervals}
+    \begin{definition} 
+        \label{def:rel-int}
+        The relative interval of the formula $\phi$, $\RI(\phi) \subseteq \mathbb{Z}$ is defined recursively over the formula structure: 
+        $\RI(\phi) =$
+        \begin{equation*}
+            \begin{cases}
+                \{0\}     & \text{atomic formula,} \\ 
+                \RI(\psi) & \text{$\neg \psi$, 
+                                    $\exists x.\psi$,} \\ &\text{or $\forall x.\psi$,} \\
+                \RI(\psi) \Cup \RI(\chi) & \text{$\psi \lor \chi, or
+                                                \psi \land \chi$,} \\
+                (-b,0] \Cup ((-b,-a] \oplus \RI(\psi)) & \text{$\Previous{[a,b)}\psi$,} \\
+                [0,b) \Cup ([a,b) \oplus \RI(\psi)) & \text{$\Next{[a,b)}$,}\\
+                (-b,0] \Cup ((-b,0] \oplus \RI(\psi)) \Cup ((-b,-a] \oplus \RI(\chi)) & \text{$\psi \Since{}_{[a,b)} \chi$,} \\
+                [0,b) \Cup ([0,b) \oplus \RI(\psi)) \Cup ([a,b) \oplus \RI(\chi)) & \text{$\psi \Until{[a,b)} \chi$,} \\
+                [0,b) \Cup ([0,b) \oplus \RIr(\rho)) & \text{$\Fregex{[a,b)} \rho$, and}\\
+                (-b,0] \Cup ((-b,0] \oplus \RIr(\rho)) & \text{$\Pregex{[a,b)} \rho$.}\\
+            \end{cases}
+        \end{equation*}
+    \end{definition}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Extended Relative Intervals}
+
+    \begin{definition}
+        \label{def:e-rel-int-ops}
+        Let $M$ and $N$ be two masked predicate maps and $T$ a positive interval, then 
+        \begin{align*}
+            M \Cupmerge N = 
+                & \{ p(l) \rightarrow (I \Cup J) \mid 
+                    p(l) \rightarrow I \in m \text{ and } 
+                    p(l) \rightarrow J \in n \} \\
+                & \cup \{p(l) \rightarrow I \mid  
+                    (p(l) \rightarrow I \in m \text{ and }
+                    p(l) \in \keys(M) \setminus \keys(N)) \} \\
+                & \cup \{p(l) \rightarrow I \mid  
+                    (p(l) \rightarrow I \in n \text{ and }
+                    p(l) \in \keys(N) \setminus \keys(M))
+                    \} \\
+            T \Cupext M = 
+                & \{ p(l) \rightarrow (T \Cup I) \mid 
+                    p(l) \rightarrow I \in M \} \\
+            T \oplusext M = 
+                & \{ p(l) \rightarrow (T \oplus I) \mid 
+                    p(l) \rightarrow I \in M \} \\
+        \end{align*}
+    \end{definition}
+    
+\end{frame}
+
+\begin{frame}
+    \frametitle{Extended Relative Intervals}
+    \begin{definition}
+        \label{def:e-rel-int}
+        The extended relative interval of the formula $\varphi$, $\ERI(\varphi)$ is defined recursively over the formula structure:
+        $\ERI(\varphi) =$
+        \begin{equation*}
+            \begin{cases}
+                \{\} 
+                    & \text{if } \varphi \text{ is an atomic formula} \\
+                    & \text{and not a predicate,} \\ 
+                \{p(m) \rightarrow [0,0]\} 
+                    & \text{if } \varphi \text{ is a predicate with name } \\
+                    & p \text{ and mask } m, \\
+                \ERI(\psi) 
+                    & \text{if } \varphi \text{ is of the form } \neg \psi, \exists x.\psi, \\
+                    & \text{or } \forall x.\psi, \\
+                \dots
+                % \ERI(\psi) \Cupmerge \ERI(\chi) 
+                %     & \text{if } \varphi \text{ is of the form } \psi \lor \chi, \\
+                %     & \text{or } \psi \land \chi, \\
+                % (-b,0] \Cupext ((-b,-a] \oplusext \ERI(\psi)) 
+                %     & \text{if } \varphi \text{ is of the form } \Previous{[a,b)} \psi, \\
+                % [0,b) \Cupext ([a,b) \oplusext \ERI(\psi)) 
+                %     & \text{if } \varphi \text{ is of the form } \Next{[a,b)} \psi,\\
+                % (-b,0] \Cupext ((-b,0] \oplusext \ERI(\psi)) \Cupmerge ((-b,-a] \oplusext \ERI(\chi)) 
+                %     & \text{if } \varphi \text{ is of the form } \psi \Since{[a,b)} \chi, \\
+                % [0,b) \Cupext ([0,b) \oplusext \ERI(\psi)) \Cupmerge ([a,b) \oplusext \ERI(\chi)) 
+                %     & \text{if } \varphi \text{ is of the form } \psi \Until{[a,b)} \chi, \\
+                % [0,b) \Cupext ([0,b) \oplusext \ERIr(\psi)) 
+                %     & \text{if } \varphi \text{ is of the form } \Fregex{[a,b)} \psi, \text{ and}\\
+                % (-b,0] \Cupext ((-b,0] \oplusext \ERIr(\psi)) 
+                %     & \text{if } \varphi \text{ is of the form } \Pregex{[a,b)} \psi.
+            \end{cases}
+        \end{equation*}
+    \end{definition}
+    
+\end{frame}
