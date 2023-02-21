@@ -2,8 +2,29 @@
 
 \begin{frame}
     \frametitle{Policy Change}
+    \begin{itemize}
+        \item Start a new monitor with the new policy
+        \item \textbf{Goal:} Our monitor evaluates the new policy at the current time point just as if it had seen the same trace as the old monitor
+        \item \textbf{Naive approach:} Read entire trace again
+        \item \textbf{Idea:} Reduce the size of the trace by removing events that do not influence how the new policy gets evaluated
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Interval Operators}
+    Let $I$ and $J$ be two intervals, then
+    \begin{itemize}
+        \item $I \oplus J = \{i+j \mid i \in I, j \in J \}$  
+        \begin{itemize}
+            \item $[0,3] \oplus [-2,4] = [-2,7]$
+        \end{itemize}
+        \item $I \Cup J$ is the smallest interval that contains all elements that are in at least one of the intervals $I$ and $J$.
+        \begin{itemize}
+            \item $[-4,1] \Cup [4,5] = [-4,5]$
+        \end{itemize}
+    \end{itemize}
     
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Relative Intervals}
@@ -22,11 +43,21 @@
                 [0,b) \Cup ([a,b) \oplus \RI(\psi)) & \text{$\Next{[a,b)}$,}\\
                 (-b,0] \Cup ((-b,0] \oplus \RI(\psi)) \Cup ((-b,-a] \oplus \RI(\chi)) & \text{$\psi \Since{}_{[a,b)} \chi$,} \\
                 [0,b) \Cup ([0,b) \oplus \RI(\psi)) \Cup ([a,b) \oplus \RI(\chi)) & \text{$\psi \Until{[a,b)} \chi$,} \\
-                [0,b) \Cup ([0,b) \oplus \RIr(\rho)) & \text{$\Fregex{[a,b)} \rho$, and}\\
-                (-b,0] \Cup ((-b,0] \oplus \RIr(\rho)) & \text{$\Pregex{[a,b)} \rho$.}\\
+                % [0,b) \Cup ([0,b) \oplus \RIr(\rho)) & \text{$\Fregex{[a,b)} \rho$, and}\\
+                % (-b,0] \Cup ((-b,0] \oplus \RIr(\rho)) & \text{$\Pregex{[a,b)} \rho$.}\\
             \end{cases}
         \end{equation*}
     \end{definition}
+    Basin et al. \cite{Basin2016}
+\end{frame}
+
+\begin{frame}{Relative Intervals Example}
+    \begin{align*}
+        \neg (\texttt{loc\_accessed(i, "advertising")}) 
+        \Since{[0,30\text{d})}
+        \texttt{perm\_revoked(i)}
+    \end{align*}
+    
 \end{frame}
 
 \begin{frame}
@@ -94,5 +125,10 @@
             \end{cases}
         \end{equation*}
     \end{definition}
+    
+\end{frame}
+
+
+\begin{frame}{Extended Relative Intervals Example}
     
 \end{frame}

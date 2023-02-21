@@ -3,6 +3,9 @@
 \usepackage{float}
 \usepackage{cases}
 \usepackage{tikz}
+\usepackage{biblatex}
+
+\addbibresource{bibliography/references.bib}
 
 \title{A Real-Time, Flexible Logging Infrastructure for MonPoly}
 \subtitle{Bachelor's Thesis}
@@ -17,7 +20,7 @@
 \begin{document}
 
 \begin{frame}
-\titlepage
+    \titlepage
 \end{frame}
 
 \input{chapters/introduction.tex}
@@ -25,5 +28,24 @@
 \input{chapters/policy-change.tex}
 \input{chapters/outlook.tex}
 \input{chapters/evaluation.tex}
+
+\begin{frame}{Outlook}
+    \begin{itemize}
+        \item Reduce overhead of the wrapper
+        \begin{itemize}
+            \item Send time points asynchronously (don't wait for response before sending the next time point)
+            \item 
+        \end{itemize}
+        \item Speed up policy change
+        \begin{itemize}
+            \item 
+        \end{itemize}
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{References}
+    \printbibliography %Prints bibliography
+\end{frame}
 
 \end{document}
