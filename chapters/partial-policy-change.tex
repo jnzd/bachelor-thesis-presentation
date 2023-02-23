@@ -1,0 +1,74 @@
+\section{Partial Policy Change (Work in Progress)}
+
+\begin{frame}
+    \frametitle{Partial Policy Change in MonPoly (Work in Progress)}
+    \begin{itemize}
+        \item Only for \textbf{First Order Logic} operators above temporal operators
+        \item \textbf{Named formulas:}\\
+        \texttt{NAME[f1, name1] OR NAME[f2 and f3, name2]}
+        \item Added \emph{data types} for \texttt{NAME} in MonPoly
+        \item Updated \emph{formula parser} for \texttt{NAME} constructs
+        \item Started work on commands for adding and removing parts of formulas.
+        \item \textbf{Commands} to add or remove conjuncts or disjuncts:
+\begin{alltt}
+>remove\_part <name>< \\
+>add\_conjunct <name1> <name2> <formula>< \\
+>add\_disjunct <name1> <name2> <formula><
+\end{alltt}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Partial Policy Change in MonPoly (Work in Progress)}
+    \begin{align*}
+        \phi = 
+        (P(x, "a") \Since{[0,30)} Q(x, 2))
+        \land 
+        (\neg (R(y, "c", z)) \Since{[20,60)} P(y, z))
+    \end{align*}
+% \begin{alltt}
+% (P(x,"a") SINCE[0,30) Q(x,2)) \\
+% AND \\
+% (NOT (R(y,"c",z)) SINCE[20,60) P(y,z))
+% \end{alltt}
+
+Could become:
+\begin{alltt}
+\textcolor{blue}{NAME}[(P(x,"a") SINCE[0,30) Q(x,2)), \textcolor{red}{part1}] \\
+AND \\
+\textcolor{blue}{NAME}[(NOT (R(y,"c",z)) SINCE[20,60) P(y,z)), \textcolor{red}{part2}] \\
+
+>add\_disjunct part1 part3 'NOT P(2,"b")'<\\
+
+(\textcolor{blue}{NAME}[P(x,"a") SINCE[0,30) Q(x,2), \textcolor{red}{part1}] \\
+OR \\
+\textcolor{blue}{NAME}[NOT P(2,"b"), \textcolor{red}{part3}]) \\
+AND \\
+\textcolor{blue}{NAME}[NOT (R(y,"c",z)) SINCE[20,60) P(y,z), \textcolor{red}{part2}]
+\end{alltt}
+
+
+% \begin{alltt}
+% \textcolor{blue}{NAME}[(NOT (R(y,"c",z)) SINCE[20,60) P(y,z)), \textcolor{red}{part2}]
+% \end{alltt}
+
+
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Partial Policy Change in MonPoly (Work in Progress)}
+
+    Next up:
+
+    \begin{itemize}
+        \item Compute the internal state for formula parts that will be added.
+        \item Combine existing state with the state of the new formula.
+        \item Update state when a formula part gets removed
+    \end{itemize}
+
+    % \begin{verbatim}
+    %     NAME[<formula>, <name>]
+    % \end{verbatim}
+    
+\end{frame}

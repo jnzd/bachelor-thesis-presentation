@@ -1,5 +1,6 @@
 \section{Algorithm and Policy Change}
 
+
 \begin{frame}
     \frametitle{Policy Change}
     \begin{itemize}
@@ -10,6 +11,37 @@
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Optimization Example}
+    \vspace{-1cm}
+    \begin{align*}
+        \phi = 
+        (P(x, "a") \Since{[0,30)} Q(x, 2))
+        \land 
+        (\neg (R(y, "c", z)) \Since{[20,60)} P(y, z))
+    \end{align*}
+
+    \begin{itemize}
+        \item \textbf{Relative Interval:} $\RI(\phi) = (-60,0]$
+        \item \textbf{Extended Relative Intervals:} $\ERI(\phi) =$
+        \begin{alignat*}{3}
+            &P(*,*)      &&\to (-60,-20]\\
+            &P(*,"a")    &&\to (-30,0]\\
+            &Q(*,2)      &&\to (-30,0]\\
+            &R(*,"c",*)  &&\to (-60,0]
+        \end{alignat*}
+        \item All time points with time stamps not in the interval
+        % \vspace{-.2cm}
+        % \begin{equation*}
+            $\{\text{current time stamp}\} \oplus \RI(\phi)$
+        % \end{equation*}
+        % \vspace{-1.5cm}
+        do not change the evaluation of $\phi$ at the current time point.
+    \end{itemize}
+
+
+\end{frame}
+
+\subsection{Relative Intervals}
 \begin{frame}{Interval Operators}
     Let $I$ and $J$ be two intervals, then
     \begin{itemize}
@@ -30,36 +62,31 @@
     \frametitle{Relative Intervals}
     \begin{definition} 
         \label{def:rel-int}
-        The relative interval of the formula $\phi$, $\RI(\phi) \subseteq \mathbb{Z}$ is defined recursively over the formula structure: 
+        The relative interval of the formula $\phi$, $\RI(\phi) \subseteq \mathbb{Z}$ is defined inductively over the formula structure: 
         $\RI(\phi) =$
         \begin{equation*}
             \begin{cases}
-                \{0\}     & \text{atomic formula,} \\ 
+                \{0\}     & \text{atomic formulas} \\ 
                 \RI(\psi) & \text{$\neg \psi$, 
-                                    $\exists x.\psi$,} \\ &\text{or $\forall x.\psi$,} \\
-                \RI(\psi) \Cup \RI(\chi) & \text{$\psi \lor \chi, or
-                                                \psi \land \chi$,} \\
-                (-b,0] \Cup ((-b,-a] \oplus \RI(\psi)) & \text{$\Previous{[a,b)}\psi$,} \\
-                [0,b) \Cup ([a,b) \oplus \RI(\psi)) & \text{$\Next{[a,b)}$,}\\
-                (-b,0] \Cup ((-b,0] \oplus \RI(\psi)) \Cup ((-b,-a] \oplus \RI(\chi)) & \text{$\psi \Since{}_{[a,b)} \chi$,} \\
-                [0,b) \Cup ([0,b) \oplus \RI(\psi)) \Cup ([a,b) \oplus \RI(\chi)) & \text{$\psi \Until{[a,b)} \chi$,} \\
+                                    $\exists x.\psi$,} \forall x.\psi \\
+                \RI(\psi) \Cup \RI(\chi) & \text{$\psi \lor \chi, 
+                                                \psi \land \chi$} \\
+                (-b,0] \Cup ((-b,-a] \oplus \RI(\psi)) & \text{$\Previous{[a,b)}\psi$} \\
+                [0,b) \Cup ([a,b) \oplus \RI(\psi)) & \text{$\Next{[a,b)}$}\\
+                (-b,0] \Cup ((-b,0] \oplus \RI(\psi)) \Cup ((-b,-a] \oplus \RI(\chi)) & \text{$\psi \Since{}_{[a,b)} \chi$} \\
+                [0,b) \Cup ([0,b) \oplus \RI(\psi)) \Cup ([a,b) \oplus \RI(\chi)) & \text{$\psi \Until{[a,b)} \chi$} \\
                 % [0,b) \Cup ([0,b) \oplus \RIr(\rho)) & \text{$\Fregex{[a,b)} \rho$, and}\\
                 % (-b,0] \Cup ((-b,0] \oplus \RIr(\rho)) & \text{$\Pregex{[a,b)} \rho$.}\\
             \end{cases}
         \end{equation*}
     \end{definition}
-    Basin et al. \cite{Basin2016}
+    {\footnotesize
+    Basin et al. "Scalable Offline Monitoring of Temporal Specifications". In: \textit{Formal Methods ind System Design 49 (1 2016)}, pp. 75-108
+    }
 \end{frame}
 
-\begin{frame}{Relative Intervals Example}
-    \begin{align*}
-        \neg (\texttt{loc\_accessed(i, "advertising")}) 
-        \Since{[0,30\text{d})}
-        \texttt{perm\_revoked(i)}
-    \end{align*}
-    
-\end{frame}
 
+\subsection{Extended Relative Intervals}
 \begin{frame}
     \frametitle{Extended Relative Intervals}
 
@@ -89,46 +116,130 @@
     
 \end{frame}
 
+
 \begin{frame}
-    \frametitle{Extended Relative Intervals}
-    \begin{definition}
-        \label{def:e-rel-int}
-        The extended relative interval of the formula $\varphi$, $\ERI(\varphi)$ is defined recursively over the formula structure:
-        $\ERI(\varphi) =$
+    \frametitle{Relative Intervals}
+    \begin{definition} 
+        \label{def:rel-int}
+        The relative interval of the formula $\phi$, $\RI(\phi) \subseteq \mathbb{Z}$ is defined inductively over the formula structure: 
+        $\RI(\phi) =$
         \begin{equation*}
             \begin{cases}
-                \{\} 
-                    & \text{if } \varphi \text{ is an atomic formula} \\
-                    & \text{and not a predicate,} \\ 
-                \{p(m) \rightarrow [0,0]\} 
-                    & \text{if } \varphi \text{ is a predicate with name } \\
-                    & p \text{ and mask } m, \\
-                \ERI(\psi) 
-                    & \text{if } \varphi \text{ is of the form } \neg \psi, \exists x.\psi, \\
-                    & \text{or } \forall x.\psi, \\
-                \dots
-                % \ERI(\psi) \Cupmerge \ERI(\chi) 
-                %     & \text{if } \varphi \text{ is of the form } \psi \lor \chi, \\
-                %     & \text{or } \psi \land \chi, \\
-                % (-b,0] \Cupext ((-b,-a] \oplusext \ERI(\psi)) 
-                %     & \text{if } \varphi \text{ is of the form } \Previous{[a,b)} \psi, \\
-                % [0,b) \Cupext ([a,b) \oplusext \ERI(\psi)) 
-                %     & \text{if } \varphi \text{ is of the form } \Next{[a,b)} \psi,\\
-                % (-b,0] \Cupext ((-b,0] \oplusext \ERI(\psi)) \Cupmerge ((-b,-a] \oplusext \ERI(\chi)) 
-                %     & \text{if } \varphi \text{ is of the form } \psi \Since{[a,b)} \chi, \\
-                % [0,b) \Cupext ([0,b) \oplusext \ERI(\psi)) \Cupmerge ([a,b) \oplusext \ERI(\chi)) 
-                %     & \text{if } \varphi \text{ is of the form } \psi \Until{[a,b)} \chi, \\
-                % [0,b) \Cupext ([0,b) \oplusext \ERIr(\psi)) 
-                %     & \text{if } \varphi \text{ is of the form } \Fregex{[a,b)} \psi, \text{ and}\\
-                % (-b,0] \Cupext ((-b,0] \oplusext \ERIr(\psi)) 
-                %     & \text{if } \varphi \text{ is of the form } \Pregex{[a,b)} \psi.
+                \{0\}     & \text{atomic formulas} \\ 
+                \RI(\psi) & \text{$\neg \psi$, 
+                                    $\exists x.\psi$,} \forall x.\psi \\
+                \RI(\psi) \Cup \RI(\chi) & \text{$\psi \lor \chi, 
+                                                \psi \land \chi$} \\
+                (-b,0] \Cup ((-b,-a] \oplus \RI(\psi)) & \text{$\Previous{[a,b)}\psi$} \\
+                [0,b) \Cup ([a,b) \oplus \RI(\psi)) & \text{$\Next{[a,b)}$}\\
+                (-b,0] \Cup ((-b,0] \oplus \RI(\psi)) \Cup ((-b,-a] \oplus \RI(\chi)) & \text{$\psi \Since{}_{[a,b)} \chi$} \\
+                [0,b) \Cup ([0,b) \oplus \RI(\psi)) \Cup ([a,b) \oplus \RI(\chi)) & \text{$\psi \Until{[a,b)} \chi$} \\
+                % [0,b) \Cup ([0,b) \oplus \RIr(\rho)) & \text{$\Fregex{[a,b)} \rho$, and}\\
+                % (-b,0] \Cup ((-b,0] \oplus \RIr(\rho)) & \text{$\Pregex{[a,b)} \rho$.}\\
             \end{cases}
         \end{equation*}
     \end{definition}
+    {\footnotesize
+    Basin et al. "Scalable Offline Monitoring of Temporal Specifications". In: \textit{Formal Methods ind System Design 49 (1 2016)}, pp. 75-108
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Extended Relative Intervals}
+    \Wider{
+    $\ERI(\phi) =$
+    \vspace{-.2cm}
+    \begin{equation*}
+        \begin{cases}
+            \textcolor{red}{ \{\} } & \text{atomic formulas} \\
+                                    & \text{excl. predicates} \\
+            \textcolor{red}{\{p(m) \rightarrow [0,0]\}} 
+                & \text{predicate } p\\
+                & \text{with mask } m, \\
+            \ERI(\psi) 
+                & \neg \psi, \exists x.\psi, \forall x.\psi \\
+            \ERI(\psi) \textcolor{red}{\Cupmerge} \ERI(\chi) 
+                & \psi \lor \chi, \psi \land \chi \\
+            (-b,0] \textcolor{red}{\Cupext} ((-b,-a] \textcolor{red}{\oplusext} \ERI(\psi)) 
+                & \Previous{[a,b)} \psi \\
+            [0,b) \textcolor{red}{\Cupext} ([a,b) \textcolor{red}{\oplusext} \ERI(\psi)) 
+                & \Next{[a,b)} \psi \\
+            (-b,0] \textcolor{red}{\Cupext} ((-b,0] \textcolor{red}{\oplusext} \ERI(\psi)) \textcolor{red}{\Cupmerge} ((-b,-a] \textcolor{red}{\oplusext} \ERI(\chi)) 
+                & \psi \Since{[a,b)} \chi \\
+            [0,b) \textcolor{red}{\Cupext} ([0,b) \textcolor{red}{\oplusext} \ERI(\psi)) \textcolor{red}{\Cupmerge} ([a,b) \textcolor{red}{\oplusext} \ERI(\chi)) 
+                & \psi \Until{[a,b)} \chi \\
+            % [0,b) \Cupext ([0,b) \oplusext \ERIr(\psi))
+            %     & \Fregex{[a,b)} \psi, \text{ and}\\
+            % (-b,0] \Cupext ((-b,0] \oplusext \ERIr(\psi)) 
+            %     & \Pregex{[a,b)} \psi.
+        \end{cases}
+    \end{equation*}
+    We proofed that this definition is a correct approximation such that it extracts all necessary time points from a trace and that the evaluation of $\phi$ is the same for the original trace and the extraction.
+    }
     
 \end{frame}
 
+\begin{frame}{Extended Relative Intervals - SQL Query}
+    \begin{align*}
+        \phi = 
+        (P(x, "a") \Since{[0,30)} Q(x, 2))
+        \land 
+        (\neg (R(y, "c", z)) \Since{[20,60)} P(y, z))
+    \end{align*}
+    \begin{itemize}
+        \item \textbf{Relative Interval:} $\RI(\phi) = \textcolor{blue}{(-60,0]}$
+        \item \textbf{Extended Relative Intervals:} $\ERI(\phi) =$
+        \begin{alignat*}{3}
+            &P(*,*)                       &&\to \textcolor{red}{(-60,-20]}\\
+            &P(*,\textcolor{red}{"a"})    &&\to \textcolor{red}{(-30,0]}\\
+            &Q(*,\textcolor{red}{2})      &&\to \textcolor{red}{(-30,0]}\\
+            &R(*,\textcolor{red}{"c"},*)  &&\to \textcolor{red}{(-60,0]}
+        \end{alignat*}
+    \end{itemize}
+\end{frame}
 
-\begin{frame}{Extended Relative Intervals Example}
+\begin{frame}[fragile]{Extended Relative Intervals - SQL Query}
+\begin{alltt}
+SELECT * FROM P WHERE
+    \textcolor{red}{(time_stamp > <NOW>-60 AND time_stamp <= <NOW>-20)}
+    OR
+    \textcolor{red}{(x2 = "a" AND
+    time_stamp > <NOW> -30 AND time_stamp <= <NOW>-0)};
+SELECT * FROM Q WHERE
+    \textcolor{red}{ (x2 = 2 AND
+    time_stamp > <NOW>-30 AND time_stamp <= <NOW>-0)};
+SELECT * FROM R WHERE
+    \textcolor{red}{ (x2 = "c" AND
+    time_stamp > <NOW>-60 AND time_stamp <= <NOW>-0)};
+SELECT * FROM time_points WHERE
+    \textcolor{blue}{(time_stamp > <NOW>-60 AND time_stamp <= <NOW>-0)};
+\end{alltt}
+\end{frame}
+
+
+\begin{frame}{Database Result Conversion}
+
+\textbf{QuestDB Response}
+    \begin{alltt}
+[{"R":[]},\\
+{"Q":[[0,8,65536,"Thu, 01 Jan 1970 00:00:01 GMT"]]},\\
+{"P":[]},\\
+{"time\_points":[[65536,"Thu, 01 Jan 1970 00:00:01 GMT"],
+                 [65537,"Thu, 01 Jan 1970 00:00:02 GMT"]]}]
+    \end{alltt}
+\textbf{wrapper.json}
+    \begin{alltt}
+    [{"predicates":[{"name":"Q","occurrences":[[0,8]]}], \\
+        "timepoint":65536,"timestamp":"1970-01-01 00:00:01"}, \\
+    {"predicates":[],"timepoint":65537,"timestamp":"1970-01-01 00:00:02"}]
+    \end{alltt}
+
+\textbf{monpoly.log}
+    \begin{alltt}
+@1 Q(0, 8) ; \\
+@2 ;
+    \end{alltt}
+
+
     
 \end{frame}

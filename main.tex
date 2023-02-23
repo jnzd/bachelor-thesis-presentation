@@ -3,9 +3,30 @@
 \usepackage{float}
 \usepackage{cases}
 \usepackage{tikz}
-\usepackage{biblatex}
+% \usepackage{biblatex}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{alltt}
+\usepackage{xcolor}
 
-\addbibresource{bibliography/references.bib}
+
+
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \insertframenumber/\inserttotalframenumber
+}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+% \addbibresource{bibliography/references.bib}
 
 \title{A Real-Time, Flexible Logging Infrastructure for MonPoly}
 \subtitle{Bachelor's Thesis}
@@ -16,36 +37,18 @@
 % \input{layout/frametitle.tex}
 \input{operators.tex}
 
-
 \begin{document}
 
-\begin{frame}
-    \titlepage
-\end{frame}
+    \begin{frame}
+        \titlepage
+    \end{frame}
 
-\input{chapters/introduction.tex}
-\input{chapters/wrapper.tex}
-\input{chapters/policy-change.tex}
-\input{chapters/outlook.tex}
-\input{chapters/evaluation.tex}
 
-\begin{frame}{Outlook}
-    \begin{itemize}
-        \item Reduce overhead of the wrapper
-        \begin{itemize}
-            \item Send time points asynchronously (don't wait for response before sending the next time point)
-            \item 
-        \end{itemize}
-        \item Speed up policy change
-        \begin{itemize}
-            \item 
-        \end{itemize}
-    \end{itemize}
-    
-\end{frame}
-
-\begin{frame}{References}
-    \printbibliography %Prints bibliography
-\end{frame}
+    \input{chapters/introduction.tex}
+    \input{chapters/wrapper.tex}
+    \input{chapters/policy-change.tex}
+    \input{chapters/partial-policy-change.tex}
+    \input{chapters/evaluation.tex}
+    \input{chapters/outlook.tex}
 
 \end{document}

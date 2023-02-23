@@ -1,4 +1,13 @@
-\section{Introduction}
+\section{Background and Motivation}
+
+
+\begin{frame}{Agenda}
+    \tableofcontents
+\end{frame}
+
+\subsection{Monitors and Databases}
+
+
 \subsection{MonPoly}
 
 \begin{frame}
@@ -6,32 +15,116 @@
     \begin{itemize}
         \item Runtime Monitor
         \item Metric First Order Temporal Logic (MFOTL)
+        \item MFOTL temporal operators (left) and syntactic sugar (right)
+        \begin{columns}
+            \begin{column}{0.4\textwidth}
+                \begin{itemize}
+                    \item $\Next{I}$ ("Next")
+                    \item $\Previous{I}$ ("Previous")
+                    \item $\Until{I}$ ("Until")
+                    \item $\Since{I}$ ("Since")
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.4\textwidth}
+                \begin{itemize}
+                    \item $\Always{I}$ ("Always")
+                    \item $\Historically{I}$ ("Historically")
+                    \item $\Eventually{I}$ ("Eventually")
+                    \item $\Once{I}$ ("Once")
+                \end{itemize}
+            \end{column}
+        \end{columns}
+        \vspace{.2cm}
+        \textit{The interval $I$ restricts the time points relevant to an operator.}
+        \item Time Point vs. Time Stamp
         \begin{itemize}
-            \item $\Next{}$ ("Next")
-            \item $\Previous{}$ ("Previous")
-            \item $\Since{}$ ("Since")
-            \item $\Until{}$ ("Until")
+            \item \textbf{Time Point}: Time stamped collection of events (predicates), often referred to by an integer index
+            \item \textbf{Time Stamp}: Specifies a moment in time, e.g. seconds since Unix epoch
         \end{itemize}
+
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Online and Offline Monitoring}
+    \begin{itemize}
+        \item \textbf{Online Monitoring} is done while the system is running
+        \item \textbf{Offline Monitoring} is done on a log after a system has completed
+        \item We focus on the Online Monitoring problem
+    \end{itemize}
+    
 \end{frame}
 
 
 \subsection{Time-Series Databases (QuestDB)}
 
-\begin{frame}{Time-Series Databases}
-    A time-series database is optimized for the insertion and retrieval of temporal data.
 
-    \vspace{1.2cm}
+\begin{frame}{Time-Series Databases}
+    \begin{itemize}
+        \item A time-series database is optimized for the insertion and retrieval of temporal data.
+        \item QuestDB
+        \begin{itemize}
+            \item Largely compatible with PostgreSQL
+            \item Adds a {\color{red} \texttt{TIMESTAMP}} datatype in addition to the usual types \texttt{INT}, \texttt{STRING}, etc.
+        \end{itemize}
+        \item Dedicated time stamp column (analogous to an index column)
+    \end{itemize}
+    \vspace{0.6cm}
     \centering
-    \includegraphics[width=0.7\linewidth]{diagrams/questdb.png}
+    \includegraphics[width=0.5\linewidth]{diagrams/questdb.png}
+    
+\end{frame}
+
+\begin{frame}{Monitor vs. Database Approach}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            {\Large Monitor (MonPoly)}
+            \begin{itemize}
+                \item Good when: 
+                    \begin{itemize}
+                        \item Data changes often
+                        \item Policy changes infrequently
+                    \end{itemize}
+                \item Bad when:
+                    \begin{itemize}
+                        \item Policy changes frequently
+                    \end{itemize}
+            \end{itemize}
+
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            {\Large Database (QuestDB)}
+            \begin{itemize}
+                \item Good when:
+                    \begin{itemize}
+                        \item Data stays almost constant
+                        \item Varying, frequent queries
+                    \end{itemize}
+
+                \item Bad when:
+                    \begin{itemize}
+                        \item Data changes rapidly
+                    \end{itemize}
+            \end{itemize}
+
+
+        \end{column}
+    \end{columns}
     
 \end{frame}
 
 
 \begin{frame}{Motivation}
     \begin{itemize}
-        \item Combining logging and monitoring.
-        \item Missing policy change in MonPoly
+        \item Exploit the combination of monitoring and time-series databases
+        \begin{itemize}
+            \item Allows us to offer a policy change method
+        \end{itemize}
+        \item More accessible interface
+        \begin{itemize}
+            \item Web services
+            \item Distributed systems
+        \end{itemize}
+        \item Increase fault tolerance
     \end{itemize}
     
 \end{frame}

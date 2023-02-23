@@ -1,29 +1,16 @@
 \section{Outlook}
-
-\begin{frame}
-    \frametitle{Partial Policy Change in MonPoly (Work in Progress)}
+\begin{frame}{Outlook}
     \begin{itemize}
-        \item Named formulas
-        \item \texttt{NAME[f1, name1] OR NAME[f2 and f3, name2]}
-        \item Commands to add or remove conjuncts or disjuncts
-        \item Added data types for \texttt{NAME} in MonPoly
-        \item Updated formula parser for \texttt{NAME} constructs
-        \item Started work on commands for adding and removing parts of formulas.
+        \item Reduce overhead of the wrapper
+        \begin{itemize}
+            \item More in depth profiling of the wrapper
+            \item Send time points asynchronously (don't wait for response before sending the next time point)
+        \end{itemize}
+        \item Speed up policy change
+        \begin{itemize}
+            \item More involved checking for constraints on variables in formulas (such as $x < 20$)
+        \end{itemize}
+        \item Continue the partial policy change within MonPoly
     \end{itemize}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Partial Policy Change in MonPoly (Work in Progress)}
-    Next up:
-
-    \begin{itemize}
-        \item Compute the internal state for formula parts that will be added.
-        \item Combine existing state with the state of the new formula.
-        \item Update state when a formula part gets removed
-    \end{itemize}
-
-    % \begin{verbatim}
-    %     NAME[<formula>, <name>]
-    % \end{verbatim}
     
 \end{frame}
