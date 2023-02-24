@@ -17,7 +17,7 @@
             \item This is a better simulation of online monitoring
         \end{itemize}
         \item Measure the time it takes for the wrapper to monitor these traces
-        \item This was done \textbf{5 times} (with 5 different policies)
+        \item This was done \textbf{100 times} (with 100 different policies)
     \end{itemize}
 \end{frame}
 
@@ -44,11 +44,10 @@
 \begin{frame}{Policy Change Optimization}
     \begin{itemize}
         \item Policy change with 2 randomly generated formulas
-        \item For every pair of formulas the policy change is done with random traces of different length
-        \item For the policies all temporal operators have intervals that are at most $[0,20)$
-        \item The trace length refers to the number of time points in the trace
-        \item We used traces with lengths $4^i$ for $i = 0,\dots, 8$
-        \item \textbf{In conclusion:} 9 times policy change for each of the 5 formula pairs
+        \item Intervals in policies are bounded by $[0,20)$.
+        \item Random traces with $4^i$ time points, for $i = 0,\dots, 8$
+        \item Load trace into wrapper and then initiate the policy change
+        \item This was done 100 times, for 100 different policy pairs.
     \end{itemize}
 \end{frame}
 

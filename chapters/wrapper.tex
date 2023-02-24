@@ -1,53 +1,5 @@
 \section{The Wrapper}
 
-
-\begin{frame}[fragile]
-    \frametitle{Signature to Database Schema}
-\begin{columns}
-    \begin{column}{0.6\textwidth}
-        \vspace{-0.5cm}
-        \begin{center}
-            schema.sql
-        \end{center}
-        \vspace{-0.7cm}
-\begin{alltt}
-CREATE TABLE P(x1 INT, x2 STRING,
-               tp INT,
-               ts \textcolor{blue}{TIMESTAMP})
-               \textcolor{red}{timestamp(ts)};
-CREATE TABLE Q(x1 INT, x2 INT,
-               tp INT,
-               ts \textcolor{blue}{TIMESTAMP})
-               \textcolor{red}{timestamp(ts)};
-CREATE TABLE R(x1 INT,x2 STRING,
-               x3 STRING,
-               tp INT,
-               ts \textcolor{blue}{TIMESTAMP})
-               \textcolor{red}{timestamp(ts)};
-CREATE TABLE time_points(tp INT,
-                         ts \textcolor{blue}{TIMESTAMP})
-                         \textcolor{red}{timestamp(ts)};
-
-\end{alltt}
-    \end{column}
-    \begin{column}{0.45\textwidth}
-        \begin{center}
-            signature.sig
-        \end{center}
-        \vspace{-0.7cm}
-\begin{alltt}
-P(\textcolor{teal}{id}:int, \textcolor{teal}{action}:string)
-Q(\textcolor{teal}{id1}:int, \textcolor{teal}{id2}:int)
-R(int, string, string)
-\end{alltt}
-\vspace{1.1cm}
-        
-    \end{column}
-\end{columns}
-\end{frame}
-
-\subsection{Architecture}
-
 \begin{frame}[fragile]{The Wrapper - REST API}
     \begin{columns}
         \begin{column}{0.5\textwidth}
@@ -85,13 +37,17 @@ R(int, string, string)
     \end{columns}
 \end{frame}
 
+
+\subsection{Architecture}
+
+
 \begin{frame}
     \frametitle{The Wrapper - Architecture}
     \centering
     \includegraphics[width=\linewidth]{diagrams/wrapper.png}
 \end{frame}
 
-\subsection{The Wrapper - Data flow}
+\subsection{Data flow}
 
 \begin{frame}{Data flow}
     % \centering

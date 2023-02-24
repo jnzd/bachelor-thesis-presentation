@@ -90,29 +90,28 @@
 \begin{frame}
     \frametitle{Extended Relative Intervals}
 
-    \begin{definition}
-        \label{def:e-rel-int-ops}
-        Let $M$ and $N$ be two masked predicate maps and $T$ a positive interval, then 
-        \begin{align*}
-            M \Cupmerge N = 
-                & \{ p(l) \rightarrow (I \Cup J) \mid 
-                    p(l) \rightarrow I \in m \text{ and } 
-                    p(l) \rightarrow J \in n \} \\
-                & \cup \{p(l) \rightarrow I \mid  
-                    (p(l) \rightarrow I \in m \text{ and }
-                    p(l) \in \keys(M) \setminus \keys(N)) \} \\
-                & \cup \{p(l) \rightarrow I \mid  
-                    (p(l) \rightarrow I \in n \text{ and }
-                    p(l) \in \keys(N) \setminus \keys(M))
-                    \} \\
-            T \Cupext M = 
-                & \{ p(l) \rightarrow (T \Cup I) \mid 
-                    p(l) \rightarrow I \in M \} \\
-            T \oplusext M = 
-                & \{ p(l) \rightarrow (T \oplus I) \mid 
-                    p(l) \rightarrow I \in M \} \\
-        \end{align*}
-    \end{definition}
+    Map data structure replaces intervals and new operators are needed.
+    \label{def:e-rel-int-ops}
+    Let $M$ and $N$ be two masked predicate maps and $T$ an interval, then 
+    \begin{align*}
+        M \Cupmerge N = 
+            & \{ p(l) \rightarrow (I \Cup J) \mid 
+                p(l) \rightarrow I \in m \text{ and } 
+                p(l) \rightarrow J \in n \} \\
+            & \cup \{p(l) \rightarrow I \mid  
+                (p(l) \rightarrow I \in m \text{ and }
+                p(l) \in \keys(M) \setminus \keys(N)) \} \\
+            & \cup \{p(l) \rightarrow I \mid  
+                (p(l) \rightarrow I \in n \text{ and }
+                p(l) \in \keys(N) \setminus \keys(M))
+                \} \\
+        T \Cupext M = 
+            & \{ p(l) \rightarrow (T \Cup I) \mid 
+                p(l) \rightarrow I \in M \} \\
+        T \oplusext M = 
+            & \{ p(l) \rightarrow (T \oplus I) \mid 
+                p(l) \rightarrow I \in M \} \\
+    \end{align*}
     
 \end{frame}
 
@@ -206,10 +205,10 @@ SELECT * FROM P WHERE
     \textcolor{red}{(x2 = "a" AND
     time_stamp > <NOW> -30 AND time_stamp <= <NOW>-0)};
 SELECT * FROM Q WHERE
-    \textcolor{red}{ (x2 = 2 AND
+    \textcolor{red}{(x2 = 2 AND
     time_stamp > <NOW>-30 AND time_stamp <= <NOW>-0)};
 SELECT * FROM R WHERE
-    \textcolor{red}{ (x2 = "c" AND
+    \textcolor{red}{(x2 = "c" AND
     time_stamp > <NOW>-60 AND time_stamp <= <NOW>-0)};
 SELECT * FROM time_points WHERE
     \textcolor{blue}{(time_stamp > <NOW>-60 AND time_stamp <= <NOW>-0)};
@@ -218,28 +217,32 @@ SELECT * FROM time_points WHERE
 
 
 \begin{frame}{Database Result Conversion}
-
+    % \Wider{
 \textbf{QuestDB Response}
+\vspace{-0.2cm}
     \begin{alltt}
-[{"R":[]},\\
-{"Q":[[0,8,65536,"Thu, 01 Jan 1970 00:00:01 GMT"]]},\\
-{"P":[]},\\
-{"time\_points":[[65536,"Thu, 01 Jan 1970 00:00:01 GMT"],
-                 [65537,"Thu, 01 Jan 1970 00:00:02 GMT"]]}]
+[\{"R":[]\},\\
+\{"Q":[[0,8,65536,"Thu, 01 Jan 1970 00:00:01 GMT"]]\},\\
+\{"P":[]\},\\
+\{"time\_points":[[65536,"Thu, 01 Jan 1970 00:00:01 GMT"],
+                 [65537,"Thu, 01 Jan 1970 00:00:02 GMT"]]\}]
     \end{alltt}
 \textbf{wrapper.json}
+\vspace{-0.2cm}
     \begin{alltt}
-    [{"predicates":[{"name":"Q","occurrences":[[0,8]]}], \\
-        "timepoint":65536,"timestamp":"1970-01-01 00:00:01"}, \\
-    {"predicates":[],"timepoint":65537,"timestamp":"1970-01-01 00:00:02"}]
+    [\{"predicates":[\{"name":"Q","occurrences":[[0,8]]\}], \\
+        "timepoint":65536,"timestamp":"1970-01-01 00:00:01"\}, \\
+    \{"predicates":[],\\
+    "timepoint":65537,"timestamp":"1970-01-01 00:00:02"\}]
     \end{alltt}
 
 \textbf{monpoly.log}
+\vspace{-0.2cm}
     \begin{alltt}
-@1 Q(0, 8) ; \\
+@1 Q(0,8); \\
 @2 ;
     \end{alltt}
-
+    % }
 
     
 \end{frame}

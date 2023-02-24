@@ -32,21 +32,25 @@
 % (NOT (R(y,"c",z)) SINCE[20,60) P(y,z))
 % \end{alltt}
 
-Could become:
+Becomes:
 \begin{alltt}
-\textcolor{blue}{NAME}[(P(x,"a") SINCE[0,30) Q(x,2)), \textcolor{red}{part1}] \\
-AND \\
+\textcolor{blue}{NAME}[(P(x,"a") SINCE[0,30) Q(x,2)), \textcolor{red}{part1}] AND \\
 \textcolor{blue}{NAME}[(NOT (R(y,"c",z)) SINCE[20,60) P(y,z)), \textcolor{red}{part2}] \\
 
 >add\_disjunct part1 part3 'NOT P(2,"b")'<\\
 
-(\textcolor{blue}{NAME}[P(x,"a") SINCE[0,30) Q(x,2), \textcolor{red}{part1}] \\
-OR \\
-\textcolor{blue}{NAME}[NOT P(2,"b"), \textcolor{red}{part3}]) \\
-AND \\
+(\textcolor{blue}{NAME}[P(x,"a") SINCE[0,30) Q(x,2), \textcolor{red}{part1}] OR \\
+\textcolor{blue}{NAME}[NOT P(2,"b"), \textcolor{red}{part3}]) AND\\
 \textcolor{blue}{NAME}[NOT (R(y,"c",z)) SINCE[20,60) P(y,z), \textcolor{red}{part2}]
 \end{alltt}
+\vspace{-.8cm}
 
+    \begin{align*}
+        \phi' = 
+        &((P(x, "a") \Since{[0,30)} Q(x, 2)) \land (\neg P(2, "b"))) \\
+        &\land 
+        (\neg (R(y, "c", z)) \Since{[20,60)} P(y, z))
+    \end{align*}
 
 % \begin{alltt}
 % \textcolor{blue}{NAME}[(NOT (R(y,"c",z)) SINCE[20,60) P(y,z)), \textcolor{red}{part2}]
@@ -64,7 +68,7 @@ AND \\
     \begin{itemize}
         \item Compute the internal state for formula parts that will be added.
         \item Combine existing state with the state of the new formula.
-        \item Update state when a formula part gets removed
+        \item Update state when a formula part gets removed.
     \end{itemize}
 
     % \begin{verbatim}

@@ -1,11 +1,16 @@
 \section{Background and Motivation}
 
 
-\begin{frame}{Agenda}
-    \tableofcontents
-\end{frame}
 
-\subsection{Monitors and Databases}
+\begin{frame}{Monitoring Problem}
+    \begin{itemize}
+        \item \textbf{Runtime Monitoring:} Checking a systems actual behavior against a formal specification
+        \item \textbf{Online Monitoring} is done while the system is running
+        \item \textbf{Offline Monitoring} is done on a log after a system has completed
+        \item We focus on the Online Monitoring problem
+    \end{itemize}
+    
+\end{frame}
 
 
 \subsection{MonPoly}
@@ -45,20 +50,12 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Online and Offline Monitoring}
-    \begin{itemize}
-        \item \textbf{Online Monitoring} is done while the system is running
-        \item \textbf{Offline Monitoring} is done on a log after a system has completed
-        \item We focus on the Online Monitoring problem
-    \end{itemize}
-    
-\end{frame}
 
 
-\subsection{Time-Series Databases (QuestDB)}
+\subsection{Time-Series Database (QuestDB)}
 
 
-\begin{frame}{Time-Series Databases}
+\begin{frame}{Time-Series Database}
     \begin{itemize}
         \item A time-series database is optimized for the insertion and retrieval of temporal data.
         \item QuestDB
@@ -92,7 +89,7 @@
 
         \end{column}
         \begin{column}{0.5\textwidth}
-            {\Large Database (QuestDB)}
+            {\Large Time-Series Database (QuestDB)}
             \begin{itemize}
                 \item Good when:
                     \begin{itemize}
@@ -113,12 +110,15 @@
 \end{frame}
 
 
-\begin{frame}{Motivation}
+\begin{frame}{Combining Monitoring and Time-Series Database: Motivation}
     \begin{itemize}
-        \item Exploit the combination of monitoring and time-series databases
-        \begin{itemize}
-            \item Allows us to offer a policy change method
-        \end{itemize}
+        \item Build a wrapper that allows for both logging and monitoring on the same data
+        \item Provides the functionality of both monitors and time-series database
+        \item Allows us to offer a policy change method
+        % \item Exploit the combination of monitoring and time-series databases
+        % \begin{itemize}
+        %     \item Allows us to offer a policy change method
+        % \end{itemize}
         \item More accessible interface
         \begin{itemize}
             \item Web services
@@ -127,4 +127,57 @@
         \item Increase fault tolerance
     \end{itemize}
     
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Signature to Database Schema}
+\begin{columns}
+    \begin{column}{0.68\textwidth}
+        \vspace{-0.5cm}
+        \begin{center}
+            schema.sql
+        \end{center}
+        \vspace{-0.6cm}
+\begin{tcolorbox}
+\begin{alltt}
+CREATE TABLE P(x1 INT,x2 STRING,
+               tp INT,
+               ts \textcolor{blue}{TIMESTAMP})
+               \textcolor{red}{timestamp(ts)};
+CREATE TABLE Q(x1 INT,x2 INT,
+               tp INT,
+               ts \textcolor{blue}{TIMESTAMP})
+               \textcolor{red}{timestamp(ts)};
+CREATE TABLE R(x1 INT,x2 STRING,
+               x3 STRING,
+               tp INT,
+               ts \textcolor{blue}{TIMESTAMP})
+               \textcolor{red}{timestamp(ts)};
+CREATE TABLE time_points
+               (tp INT,
+               ts \textcolor{blue}{TIMESTAMP})
+               \textcolor{red}{timestamp(ts)};
+\end{alltt}
+\end{tcolorbox}
+    \end{column}
+    \begin{column}{0.45\textwidth}
+        \begin{center}
+            signature.sig
+        \end{center}
+        \vspace{-0.6cm}
+\begin{tcolorbox}
+\begin{alltt}
+P(\textcolor{teal}{id}:int,\textcolor{teal}{act}:string)
+Q(\textcolor{teal}{id1}:int,\textcolor{teal}{id2}:int)
+R(int,string,string)
+\end{alltt}
+\end{tcolorbox}
+\vspace{1.1cm}
+        
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Agenda}
+    \tableofcontents
 \end{frame}
